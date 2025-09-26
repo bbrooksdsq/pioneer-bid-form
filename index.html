@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pioneer Installation Bid Portal</title>
+    <title>DSQ Technology - Pioneer Installation Bid Portal</title>
     <style>
         * {
             margin: 0;
@@ -12,82 +12,152 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
             min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .logo span {
+            color: #0066cc;
+        }
+
+        .tagline {
+            color: #6c757d;
+            font-size: 14px;
         }
 
         .container {
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         h1 {
-            color: #333;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #6c757d;
             margin-bottom: 30px;
-            text-align: center;
+            font-size: 16px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            color: #004085;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
+            margin-bottom: 8px;
+            color: #495057;
             font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #dc3545;
         }
 
         input, textarea {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 15px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            background: #fff;
         }
 
         input:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .input-help {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
         }
 
         button {
             width: 100%;
-            padding: 12px;
-            background: #667eea;
+            padding: 14px 24px;
+            background: #0066cc;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 18px;
+            border-radius: 4px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.2s;
+            margin-top: 10px;
         }
 
         button:hover {
-            background: #5a67d8;
+            background: #0052a3;
         }
 
         button:disabled {
-            background: #ccc;
+            background: #6c757d;
             cursor: not-allowed;
         }
 
         .message {
             margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 14px;
             display: none;
         }
 
@@ -105,63 +175,100 @@
             display: block;
         }
 
-        .info-box {
-            background: #d1ecf1;
-            border: 1px solid #bee5eb;
-            color: #0c5460;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .container {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Pioneer Installation Bid Submission</h1>
-        <div class="info-box" id="oppInfo">
-            Loading opportunity details...
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>DSQ</span> Technology
+            </div>
+            <div class="tagline">
+                Pioneer Installation Network
+            </div>
         </div>
+    </div>
+
+    <div class="container">
+        <h1>Submit Installation Bid</h1>
+        <p class="subtitle">Pioneer Energy Storage System Installation</p>
+        
+        <div class="info-box" id="oppInfo">
+            Retrieving opportunity details...
+        </div>
+
         <form id="bidForm">
-            <div class="form-group">
-                <label for="installerEmail">Your Email Address*</label>
-                <input type="email" id="installerEmail" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="installerName">Company Name <span class="required">*</span></label>
+                    <input type="text" id="installerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="installerPhone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="installerPhone" required placeholder="(555) 123-4567">
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="installerName">Company Name*</label>
-                <input type="text" id="installerName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="installerPhone">Phone Number*</label>
-                <input type="tel" id="installerPhone" required>
+                <label for="installerEmail">Email Address <span class="required">*</span></label>
+                <input type="email" id="installerEmail" required placeholder="your@company.com">
             </div>
 
             <input type="hidden" id="opportunityId">
 
-            <div class="form-group">
-                <label for="bidAmount">Total Bid Amount ($)*</label>
-                <input type="number" id="bidAmount" min="0" step="0.01" required placeholder="Enter your total price for installation">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bidAmount">Total Bid Amount <span class="required">*</span></label>
+                    <input type="number" id="bidAmount" min="0" step="0.01" required placeholder="0.00">
+                    <div class="input-help">USD - Include all costs</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="estimatedHours">Estimated Hours <span class="required">*</span></label>
+                    <input type="number" id="estimatedHours" min="1" required placeholder="8">
+                    <div class="input-help">Total installation time</div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="availability">Earliest Available Date*</label>
+                <label for="availability">Earliest Start Date <span class="required">*</span></label>
                 <input type="date" id="availability" required>
             </div>
 
             <div class="form-group">
-                <label for="estimatedHours">Estimated Hours to Complete*</label>
-                <input type="number" id="estimatedHours" min="1" required placeholder="Total hours needed">
-            </div>
-
-            <div class="form-group">
-                <label for="notes">Additional Notes (Optional)</label>
-                <textarea id="notes" rows="4" placeholder="Any special considerations, included services, etc."></textarea>
+                <label for="notes">Additional Information</label>
+                <textarea id="notes" rows="4" placeholder="Include any special considerations, certifications, or additional services"></textarea>
             </div>
 
             <button type="submit">Submit Bid</button>
             <div id="message" class="message"></div>
         </form>
+
+        <div class="footer">
+            DSQ Technology · Confidential Bid Submission<br>
+            Questions? Contact procurement@dsqtechnology.com
+        </div>
     </div>
 
     <script>
@@ -173,15 +280,30 @@
         if (oppId) {
             document.getElementById('opportunityId').value = oppId;
             document.getElementById('oppInfo').innerHTML = `
-                <strong>Opportunity ID:</strong> ${oppId}<br>
-                ${location ? `<strong>Installation Location:</strong> ${location}` : ''}
+                <strong>Opportunity:</strong> ${oppId}<br>
+                ${location ? `<strong>Installation Location:</strong> ${decodeURIComponent(location)}` : ''}
+                <br><strong>Response Deadline:</strong> 24 hours from receipt
             `;
         } else {
-            document.getElementById('oppInfo').innerHTML = 'No opportunity ID provided. Please use the link from your bid request email.';
+            document.getElementById('oppInfo').innerHTML = 'Missing opportunity ID. Please use the link provided in your bid request email.';
+            document.getElementById('oppInfo').style.background = '#f8d7da';
+            document.getElementById('oppInfo').style.borderColor = '#dc3545';
+            document.getElementById('oppInfo').style.color = '#721c24';
         }
 
         // Set minimum date to today
         document.getElementById('availability').min = new Date().toISOString().split('T')[0];
+
+        // Format phone number as user types
+        document.getElementById('installerPhone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = `(${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6,10)}`;
+            } else if (value.length >= 3) {
+                value = `(${value.slice(0,3)}) ${value.slice(3)}`;
+            }
+            e.target.value = value;
+        });
 
         document.getElementById('bidForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -189,15 +311,13 @@
             const submitBtn = e.target.querySelector('button');
             const messageDiv = document.getElementById('message');
             
-            // Disable button during submission
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
             
-            // Gather form data
             const bidData = {
                 installerEmail: document.getElementById('installerEmail').value,
                 installerName: document.getElementById('installerName').value,
-                installerPhone: document.getElementById('installerPhone').value,
+                installerPhone: document.getElementById('installerPhone').value.replace(/\D/g, ''),
                 opportunityId: document.getElementById('opportunityId').value,
                 bidAmount: parseFloat(document.getElementById('bidAmount').value),
                 availability: document.getElementById('availability').value,
@@ -217,14 +337,14 @@
                 
                 if (response.ok) {
                     messageDiv.className = 'message success';
-                    messageDiv.textContent = 'Bid submitted successfully! You will receive a confirmation email within 24 hours.';
+                    messageDiv.textContent = 'Bid submitted successfully. You will receive confirmation via email within 24 hours.';
                     e.target.reset();
                 } else {
                     throw new Error('Submission failed');
                 }
             } catch (error) {
                 messageDiv.className = 'message error';
-                messageDiv.textContent = 'Error submitting bid. Please try again or contact support at support@dsqtechnology.com';
+                messageDiv.textContent = 'Unable to submit bid. Please try again or contact procurement@dsqtechnology.com';
                 console.error('Error:', error);
             } finally {
                 submitBtn.disabled = false;
@@ -232,8 +352,5 @@
             }
         });
     </script>
-</body>
-</html>
-    <script src="script.js"></script>
 </body>
 </html>
