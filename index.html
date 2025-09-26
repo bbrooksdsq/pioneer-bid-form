@@ -4,35 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pioneer Installation Bid Portal</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Pioneer Installation Bid Submission</h1>
+        <div class="info-box" id="oppInfo">
+            Loading opportunity details...
+        </div>
         <form id="bidForm">
             <div class="form-group">
-                <label for="installerEmail">Your Email*</label>
+                <label for="installerEmail">Your Email Address*</label>
                 <input type="email" id="installerEmail" required>
             </div>
 
             <div class="form-group">
-                <label for="installerName">Company/Installer Name*</label>
+                <label for="installerName">Company Name*</label>
                 <input type="text" id="installerName" required>
             </div>
 
             <div class="form-group">
-                <label for="installerId">Your Installer ID*</label>
-                <input type="text" id="installerId" placeholder="Your Airtable ID (rec...)" required>
+                <label for="installerPhone">Phone Number*</label>
+                <input type="tel" id="installerPhone" required>
             </div>
 
-            <div class="form-group">
-                <label for="opportunityId">Opportunity ID*</label>
-                <input type="text" id="opportunityId" required>
-            </div>
+            <input type="hidden" id="opportunityId">
 
             <div class="form-group">
-                <label for="bidAmount">Bid Amount ($)*</label>
-                <input type="number" id="bidAmount" min="0" step="0.01" required>
+                <label for="bidAmount">Total Bid Amount ($)*</label>
+                <input type="number" id="bidAmount" min="0" step="0.01" required placeholder="Enter your total price for installation">
             </div>
 
             <div class="form-group">
@@ -41,19 +150,90 @@
             </div>
 
             <div class="form-group">
-                <label for="estimatedHours">Estimated Hours*</label>
-                <input type="number" id="estimatedHours" min="1" required>
+                <label for="estimatedHours">Estimated Hours to Complete*</label>
+                <input type="number" id="estimatedHours" min="1" required placeholder="Total hours needed">
             </div>
 
             <div class="form-group">
-                <label for="notes">Additional Notes</label>
-                <textarea id="notes" rows="4"></textarea>
+                <label for="notes">Additional Notes (Optional)</label>
+                <textarea id="notes" rows="4" placeholder="Any special considerations, included services, etc."></textarea>
             </div>
 
             <button type="submit">Submit Bid</button>
             <div id="message" class="message"></div>
         </form>
     </div>
+
+    <script>
+        // Get opportunity ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const oppId = urlParams.get('id');
+        const location = urlParams.get('location');
+        
+        if (oppId) {
+            document.getElementById('opportunityId').value = oppId;
+            document.getElementById('oppInfo').innerHTML = `
+                <strong>Opportunity ID:</strong> ${oppId}<br>
+                ${location ? `<strong>Installation Location:</strong> ${location}` : ''}
+            `;
+        } else {
+            document.getElementById('oppInfo').innerHTML = 'No opportunity ID provided. Please use the link from your bid request email.';
+        }
+
+        // Set minimum date to today
+        document.getElementById('availability').min = new Date().toISOString().split('T')[0];
+
+        document.getElementById('bidForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button');
+            const messageDiv = document.getElementById('message');
+            
+            // Disable button during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Gather form data
+            const bidData = {
+                installerEmail: document.getElementById('installerEmail').value,
+                installerName: document.getElementById('installerName').value,
+                installerPhone: document.getElementById('installerPhone').value,
+                opportunityId: document.getElementById('opportunityId').value,
+                bidAmount: parseFloat(document.getElementById('bidAmount').value),
+                availability: document.getElementById('availability').value,
+                estimatedHours: parseInt(document.getElementById('estimatedHours').value),
+                notes: document.getElementById('notes').value,
+                submittedAt: new Date().toISOString()
+            };
+            
+            try {
+                const response = await fetch('https://n8n.dsqtechnology.com/webhook/pioneer-bid-response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bidData)
+                });
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = 'Bid submitted successfully! You will receive a confirmation email within 24 hours.';
+                    e.target.reset();
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Error submitting bid. Please try again or contact support at support@dsqtechnology.com';
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Bid';
+            }
+        });
+    </script>
+</body>
+</html>
     <script src="script.js"></script>
 </body>
 </html>
