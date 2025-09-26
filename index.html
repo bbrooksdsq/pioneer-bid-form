@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pioneer Installation Bid Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pioneer Installation Bid Submission</h1>
+        <form id="bidForm">
+            <div class="form-group">
+                <label for="installerEmail">Your Email*</label>
+                <input type="email" id="installerEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="installerName">Company/Installer Name*</label>
+                <input type="text" id="installerName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="installerId">Your Installer ID*</label>
+                <input type="text" id="installerId" placeholder="Your Airtable ID (rec...)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="opportunityId">Opportunity ID*</label>
+                <input type="text" id="opportunityId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bidAmount">Bid Amount ($)*</label>
+                <input type="number" id="bidAmount" min="0" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="availability">Earliest Available Date*</label>
+                <input type="date" id="availability" required>
+            </div>
+
+            <div class="form-group">
+                <label for="estimatedHours">Estimated Hours*</label>
+                <input type="number" id="estimatedHours" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes" rows="4"></textarea>
+            </div>
+
+            <button type="submit">Submit Bid</button>
+            <div id="message" class="message"></div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
