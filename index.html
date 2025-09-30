@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSQ Technology - Pioneer Installation Bid Portal</title>
+    <title>Pioneer Installation Bid - DSQ Technology</title>
     <style>
         * {
             margin: 0;
@@ -13,72 +13,117 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
-        }
-
-        .header {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
             color: #1a1a1a;
         }
 
-        .logo span {
-            color: #0066cc;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
         }
 
-        .tagline {
-            color: #6c757d;
-            font-size: 14px;
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 16px;
+            opacity: 0.95;
         }
 
         .container {
             background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            max-width: 700px;
             margin: 0 auto;
+            overflow: hidden;
         }
 
-        h1 {
-            color: #1a1a1a;
-            margin-bottom: 10px;
-            font-size: 28px;
+        .deadline-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 16px 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .deadline-banner.expired {
+            background: #dc3545;
+        }
+
+        .deadline-banner .countdown {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .project-details {
+            background: linear-gradient(135deg, #e0f7fa 0%, #e1f5fe 100%);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border-left: 4px solid #0288d1;
+        }
+
+        .project-details h2 {
+            font-size: 18px;
+            color: #01579b;
+            margin-bottom: 16px;
             font-weight: 600;
         }
 
-        .subtitle {
-            color: #6c757d;
-            margin-bottom: 30px;
-            font-size: 16px;
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #0066cc;
-            color: #004085;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            font-size: 14px;
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #01579b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            color: #004d73;
+            font-weight: 500;
+        }
+
+        .detail-value.large {
+            font-size: 20px;
+            font-weight: 700;
+            color: #01579b;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
         }
 
         .form-row {
@@ -100,7 +145,7 @@
             display: block;
             margin-bottom: 8px;
             color: #495057;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
         }
 
@@ -108,206 +153,389 @@
             color: #dc3545;
         }
 
-        .prefilled-label {
+        .prefilled-badge {
+            background: #e9ecef;
             color: #6c757d;
-            font-size: 12px;
-            font-style: italic;
-            margin-left: 5px;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 6px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input, textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
             font-size: 15px;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: all 0.2s ease;
             background: #fff;
+            font-family: inherit;
         }
 
         input[readonly] {
-            background: #e9ecef;
+            background: #f8f9fa;
+            color: #6c757d;
             cursor: not-allowed;
+            border-color: #dee2e6;
         }
 
         input:focus, textarea:focus {
             outline: none;
-            border-color: #0066cc;
-            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         input[readonly]:focus {
-            border-color: #ced4da;
+            border-color: #dee2e6;
             box-shadow: none;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        input.has-prefix {
+            padding-left: 28px;
         }
 
         .input-help {
             font-size: 12px;
             color: #6c757d;
-            margin-top: 4px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .input-error {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        input.error {
+            border-color: #dc3545;
+        }
+
+        input.error ~ .input-error {
+            display: block;
         }
 
         button {
             width: 100%;
-            padding: 14px 24px;
-            background: #0066cc;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
             margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        button:hover {
-            background: #0052a3;
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
         }
 
         button:disabled {
             background: #6c757d;
             cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
         }
 
         .message {
             margin-top: 20px;
-            padding: 12px;
-            border-radius: 4px;
+            padding: 16px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: 500;
             display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .message.success {
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
+            border: 2px solid #c3e6cb;
             display: block;
         }
 
         .message.error {
             background: #f8d7da;
             color: #721c24;
-            border: 1px solid #f5c6cb;
+            border: 2px solid #f5c6cb;
             display: block;
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+            display: block;
+        }
+
+        .expired-overlay {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .expired-overlay h2 {
+            font-size: 28px;
+            color: #dc3545;
+            margin-bottom: 16px;
+        }
+
+        .expired-overlay p {
+            font-size: 16px;
+            color: #6c757d;
+            line-height: 1.6;
         }
 
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
             color: #6c757d;
-            font-size: 14px;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
-            .form-row {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .form-row, .detail-grid {
                 grid-template-columns: 1fr;
             }
+
             .form-group.full-width {
                 grid-column: span 1;
             }
-            .container {
-                padding: 30px 20px;
+
+            .header h1 {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="header-content">
-            <div class="logo">
-                <span>DSQ</span> Technology
-            </div>
-            <div class="tagline">
-                Pioneer Installation Network
-            </div>
-        </div>
+        <h1>🔋 Pioneer Installation Bid Portal</h1>
+        <p class="subtitle">DSQ Technology Installation Network</p>
     </div>
 
     <div class="container">
-        <h1>Submit Installation Bid</h1>
-        <p class="subtitle">Pioneer Energy Storage System Installation</p>
-        
-        <div class="info-box" id="oppInfo">
-            Retrieving opportunity details...
+        <div class="deadline-banner" id="deadlineBanner">
+            <div>⏰ Bid Deadline</div>
+            <div class="countdown" id="countdown">Loading...</div>
         </div>
 
-        <form id="bidForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="installerName">Company Name <span class="prefilled-label">(Pre-filled)</span></label>
-                    <input type="text" id="installerName" readonly>
+        <div class="content" id="mainContent">
+            <div class="project-details">
+                <h2>📋 Project Details</h2>
+                <div class="detail-grid" id="projectInfo">
+                    <div class="detail-item">
+                        <span class="detail-label">Opportunity ID</span>
+                        <span class="detail-value" id="displayOppId">—</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Project Value</span>
+                        <span class="detail-value large" id="displayAmount">—</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Customer</span>
+                        <span class="detail-value" id="displayCustomer">—</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Equipment</span>
+                        <span class="detail-value" id="displayMonitors">—</span>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <span class="detail-label">Installation Location</span>
+                        <span class="detail-value" id="displayLocation">—</span>
+                    </div>
                 </div>
+            </div>
+
+            <form id="bidForm">
+                <h3 class="section-title">Your Information</h3>
                 
-                <div class="form-group">
-                    <label for="installerPhone">Phone Number <span class="prefilled-label">(Pre-filled)</span></label>
-                    <input type="tel" id="installerPhone" readonly>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="installerEmail">Email Address <span class="prefilled-label">(Pre-filled)</span></label>
-                <input type="email" id="installerEmail" readonly>
-            </div>
-
-            <input type="hidden" id="opportunityId">
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="bidAmount">Total Bid Amount <span class="required">*</span></label>
-                    <input type="number" id="bidAmount" min="0" step="0.01" required placeholder="0.00">
-                    <div class="input-help">USD - Include all costs</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>
+                            Company Name 
+                            <span class="prefilled-badge">Pre-filled</span>
+                        </label>
+                        <input type="text" id="installerName" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            Phone Number 
+                            <span class="prefilled-badge">Pre-filled</span>
+                        </label>
+                        <input type="tel" id="installerPhone" readonly>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="estimatedHours">Estimated Hours <span class="required">*</span></label>
-                    <input type="number" id="estimatedHours" min="1" required placeholder="8">
-                    <div class="input-help">Total installation time</div>
+                    <label>
+                        Email Address 
+                        <span class="prefilled-badge">Pre-filled</span>
+                    </label>
+                    <input type="email" id="installerEmail" readonly>
                 </div>
+
+                <input type="hidden" id="opportunityId">
+                <input type="hidden" id="requestTimestamp">
+
+                <h3 class="section-title" style="margin-top: 32px;">Bid Details</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bidAmount">Total Bid Amount <span class="required">*</span></label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="bidAmount" class="has-prefix" min="100" max="50000" step="0.01" required placeholder="0.00">
+                        </div>
+                        <div class="input-help">💰 All-inclusive installation cost (USD)</div>
+                        <div class="input-error">Please enter a valid amount between $100 and $50,000</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estimatedHours">Estimated Hours <span class="required">*</span></label>
+                        <input type="number" id="estimatedHours" min="1" max="80" required placeholder="8">
+                        <div class="input-help">⏱️ Total installation time</div>
+                        <div class="input-error">Please enter hours between 1 and 80</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="availability">Earliest Start Date <span class="required">*</span></label>
+                    <input type="date" id="availability" required>
+                    <div class="input-help">📅 When can you begin this installation?</div>
+                    <div class="input-error">Please select a valid future date</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Information</label>
+                    <textarea id="notes" rows="4" placeholder="Include certifications, travel costs, special equipment needs, or scheduling considerations..."></textarea>
+                    <div class="input-help">📝 Optional but recommended</div>
+                </div>
+
+                <button type="submit" id="submitBtn">Submit Bid</button>
+                <div id="message" class="message"></div>
+            </form>
+
+            <div class="footer">
+                DSQ Technology · Confidential Bid Submission<br>
+                Questions? Contact <a href="mailto:procurement@dsqtechnology.com">procurement@dsqtechnology.com</a>
             </div>
-
-            <div class="form-group">
-                <label for="availability">Earliest Start Date <span class="required">*</span></label>
-                <input type="date" id="availability" required>
-            </div>
-
-            <div class="form-group">
-                <label for="notes">Additional Information</label>
-                <textarea id="notes" rows="4" placeholder="Include any special considerations, certifications, or additional services"></textarea>
-            </div>
-
-            <button type="submit">Submit Bid</button>
-            <div id="message" class="message"></div>
-        </form>
-
-        <div class="footer">
-            DSQ Technology · Confidential Bid Submission<br>
-            Questions? Contact procurement@dsqtechnology.com
         </div>
     </div>
 
     <script>
-        // Get all URL parameters
+        // Parse URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const oppId = urlParams.get('id');
         const location = urlParams.get('location');
         const installerName = urlParams.get('installer');
         const installerEmail = urlParams.get('email');
         const installerPhone = urlParams.get('phone');
+        const amount = urlParams.get('amount');
+        const monitors = urlParams.get('monitors');
+        const customer = urlParams.get('customer');
+        const requestTime = urlParams.get('timestamp') || Date.now();
+
+        // Calculate deadline (24 hours from request)
+        const deadlineTime = parseInt(requestTime) + (24 * 60 * 60 * 1000);
         
+        function updateCountdown() {
+            const now = Date.now();
+            const remaining = deadlineTime - now;
+            
+            if (remaining <= 0) {
+                document.getElementById('mainContent').innerHTML = `
+                    <div class="expired-overlay">
+                        <h2>⏰ Bid Window Closed</h2>
+                        <p>This bid request expired on ${new Date(deadlineTime).toLocaleString()}.</p>
+                        <p style="margin-top: 12px;">If you have questions or need an extension, please contact <a href="mailto:procurement@dsqtechnology.com">procurement@dsqtechnology.com</a></p>
+                    </div>
+                `;
+                document.getElementById('deadlineBanner').classList.add('expired');
+                document.getElementById('countdown').textContent = 'EXPIRED';
+                return;
+            }
+            
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
         // Pre-fill form fields
-        if (installerName) {
-            document.getElementById('installerName').value = decodeURIComponent(installerName);
-        }
-        
-        if (installerEmail) {
-            document.getElementById('installerEmail').value = decodeURIComponent(installerEmail);
-        }
-        
+        if (installerName) document.getElementById('installerName').value = decodeURIComponent(installerName);
+        if (installerEmail) document.getElementById('installerEmail').value = decodeURIComponent(installerEmail);
         if (installerPhone) {
-            // Format phone number for display
             let phone = decodeURIComponent(installerPhone);
             if (phone.length === 10) {
                 phone = `(${phone.slice(0,3)}) ${phone.slice(3,6)}-${phone.slice(6,10)}`;
@@ -315,32 +543,80 @@
             document.getElementById('installerPhone').value = phone;
         }
         
+        // Display project details
         if (oppId) {
             document.getElementById('opportunityId').value = oppId;
-            document.getElementById('oppInfo').innerHTML = `
-                <strong>Opportunity ID:</strong> ${oppId}<br>
-                ${location ? `<strong>Installation Location:</strong> ${decodeURIComponent(location)}` : ''}
-                <br><strong>Response Deadline:</strong> 24 hours from email receipt
-                <br><strong>Your Information:</strong> Pre-filled below (verified from our records)
-            `;
+            document.getElementById('requestTimestamp').value = requestTime;
+            document.getElementById('displayOppId').textContent = oppId;
+            document.getElementById('displayAmount').textContent = amount ? `$${parseFloat(amount).toLocaleString()}` : '—';
+            document.getElementById('displayCustomer').textContent = customer ? decodeURIComponent(customer) : '—';
+            document.getElementById('displayMonitors').textContent = monitors ? `${monitors} Pioneer Monitor${monitors > 1 ? 's' : ''}` : '—';
+            document.getElementById('displayLocation').textContent = location ? decodeURIComponent(location) : '—';
         } else {
-            document.getElementById('oppInfo').innerHTML = 'Missing opportunity ID. Please use the link provided in your bid request email.';
-            document.getElementById('oppInfo').style.background = '#f8d7da';
-            document.getElementById('oppInfo').style.borderColor = '#dc3545';
-            document.getElementById('oppInfo').style.color = '#721c24';
+            document.getElementById('message').className = 'message error';
+            document.getElementById('message').textContent = 'Invalid bid request link. Please use the link provided in your email.';
+            document.getElementById('submitBtn').disabled = true;
         }
 
         // Set minimum date to today
         document.getElementById('availability').min = new Date().toISOString().split('T')[0];
 
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            const bidAmount = document.getElementById('bidAmount');
+            if (bidAmount.value < 100 || bidAmount.value > 50000) {
+                bidAmount.classList.add('error');
+                isValid = false;
+            } else {
+                bidAmount.classList.remove('error');
+            }
+            
+            const estimatedHours = document.getElementById('estimatedHours');
+            if (estimatedHours.value < 1 || estimatedHours.value > 80) {
+                estimatedHours.classList.add('error');
+                isValid = false;
+            } else {
+                estimatedHours.classList.remove('error');
+            }
+            
+            const availability = document.getElementById('availability');
+            const selectedDate = new Date(availability.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                availability.classList.add('error');
+                isValid = false;
+            } else {
+                availability.classList.remove('error');
+            }
+            
+            return isValid;
+        }
+
+        // Form submission
         document.getElementById('bidForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const submitBtn = e.target.querySelector('button');
+            if (!validateForm()) {
+                return;
+            }
+
+            // Check if deadline has passed
+            if (Date.now() >= deadlineTime) {
+                document.getElementById('message').className = 'message error';
+                document.getElementById('message').textContent = 'Bid deadline has passed. Unable to submit.';
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
             const messageDiv = document.getElementById('message');
             
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.textContent = 'Submitting Bid...';
+            messageDiv.style.display = 'none';
             
             const bidData = {
                 installerEmail: document.getElementById('installerEmail').value,
@@ -351,7 +627,8 @@
                 availability: document.getElementById('availability').value,
                 estimatedHours: parseInt(document.getElementById('estimatedHours').value),
                 notes: document.getElementById('notes').value,
-                submittedAt: new Date().toISOString()
+                submittedAt: new Date().toISOString(),
+                requestTimestamp: requestTime
             };
             
             try {
@@ -365,22 +642,55 @@
                 
                 if (response.ok) {
                     messageDiv.className = 'message success';
-                    messageDiv.textContent = 'Bid submitted successfully. You will receive confirmation via email within 24 hours.';
-                    // Only reset the editable fields
+                    messageDiv.textContent = '✅ Bid submitted successfully! You will receive confirmation via email within 24 hours. Thank you for your submission.';
+                    
+                    // Clear form
                     document.getElementById('bidAmount').value = '';
                     document.getElementById('estimatedHours').value = '';
                     document.getElementById('availability').value = '';
                     document.getElementById('notes').value = '';
+                    
+                    // Scroll to message
+                    messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 } else {
                     throw new Error('Submission failed');
                 }
             } catch (error) {
                 messageDiv.className = 'message error';
-                messageDiv.textContent = 'Unable to submit bid. Please try again or contact procurement@dsqtechnology.com';
+                messageDiv.textContent = '❌ Unable to submit bid. Please try again or contact procurement@dsqtechnology.com for assistance.';
                 console.error('Error:', error);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Submit Bid';
+            }
+        });
+
+        // Real-time validation
+        document.getElementById('bidAmount').addEventListener('input', function() {
+            if (this.value && (this.value < 100 || this.value > 50000)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('estimatedHours').addEventListener('input', function() {
+            if (this.value && (this.value < 1 || this.value > 80)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('availability').addEventListener('input', function() {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
             }
         });
     </script>
